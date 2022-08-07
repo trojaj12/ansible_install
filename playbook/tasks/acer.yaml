@@ -1,0 +1,22 @@
+---
+- name: Add non-free repos
+  replace:
+    dest: /etc/apt/sources.list
+    regexp: '^(deb(?!.* non-free).*)'
+    replace: '\1 non-free'
+
+- name: install drivers
+  loop: ["firmware-atheros", "firmware-realtek", "firmware-misc-nonfree"]
+  apt:
+    name: "{{item}}"
+    update_cache: yes
+
+- name: add headphones selector
+  lineinfile:
+    path: /etc/modprobe.d/alsa-base.conf
+    line: "options snd-hda-intel model=alc255-acer,dell-headset-multi"
+    create: yes
+    state: present
+    group: root
+    owner: root
+    mode: 0644

@@ -1,0 +1,6 @@
+---
+USERS:
+  - name: jan
+    power: true
+    groups: ["docker"]
+  - name: root

@@ -1,0 +1,54 @@
+---
+- name: chrome
+  tags: never, gui
+  block:
+  - name: chrome | add key
+    apt_key:
+      url: https://dl.google.com/linux/linux_signing_key.pub
+      keyring: "{{KEYRINGS}}/google.gpg"
+  - name: chrome | add repo
+    apt_repository:
+      repo: |
+        deb [signed-by={{KEYRINGS}}/google.gpg] https://dl.google.com/linux/chrome/deb/ stable main
+      filename: google-chrome
+
+- name: git-lfs
+  block:
+  - name: git-lfs | add key
+    apt_key:
+      url: https://packagecloud.io/github/git-lfs/gpgkey
+      keyring: "{{KEYRINGS}}/git-lfs.gpg"
+  - name: git-lfs | add repo
+    apt_repository:
+      repo: |
+        deb [signed-by={{KEYRINGS}}/git-lfs.gpg] https://packagecloud.io/github/git-lfs/debian/  {{RELEASE}} main\n\
+        deb-src [signed-by={{KEYRINGS}}/git-lfs.gpg] https://packagecloud.io/github/git-lfs/debian/  {{RELEASE}} main\n"
+      filename: git-lfs
+
+- name: docker
+  block:
+  - name: docker | add key
+    apt_key:
+      url: https://download.docker.com/linux/debian/gpg
+      keyring: "{{KEYRINGS}}/docker.gpg"
+  - name: docker | add repo
+    apt_repository:
+      repo: |
+        deb [signed-by={{KEYRINGS}}/docker.gpg] https://download.docker.com/linux/debian {{RELEASE}} stable
+      filename: docker
+
+- name: VS code
+  tags: never, gui
+  block:
+  - name: vs code | add key
+    apt_key:
+      url: https://packages.microsoft.com/keys/microsoft.asc
+      keyring: "{{KEYRINGS}}/microsoft.gpg"
+  - name: vs code | add repo
+    apt_repository:
+      repo: |
+        deb [signed-by={{KEYRINGS}}/microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main
+      filename: vscode
+
+
+

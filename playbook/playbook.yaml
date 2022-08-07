@@ -1,0 +1,34 @@
+---
+- hosts: all
+  name: Update and install tools for TLS
+  become: true
+  pre_tasks:
+  - name: update repository index
+    apt:
+      update_cache: yes
+    changed_when: false
+  - name: install basic tools
+    apt:
+      name: ["curl", "gpg", "ca-certificates"]
+      state: latest
+
+- hosts: all
+  name: Set up
+  become: true
+  vars_files:
+    - vars/main.yaml
+    - vars/users.yaml
+  tasks:
+    - import_tasks: tasks/repositories.yaml
+    - import_tasks: tasks/install.yaml
+    - import_tasks: tasks/users.yaml
+    - import_tasks: tasks/acer.yaml
+      tags: ["never", "acer"]
+
+- hosts: all
+  name: Set Up environment
+  tags: never, env
+  become: yes
+  become_user: jan
+  tasks:
+    - import_tasks: tasks/env.yaml

@@ -1,0 +1,20 @@
+---
+- name: Add user {{item.name}}
+  loop: "{{USERS}}"
+  user:
+    name: "{{item.name}}"
+    generate_ssh_key: no
+    password: "{{ item.password | default(item.name) | password_hash('sha512') }}"
+    append: yes
+    groups: "{{ item.groups | default([]) }}"
+    shell: /bin/bash
+
+- name: Add user to sudoers
+  loop: "{{USERS}}"
+  when: item.power is defined and item.power is true
+  community.general.sudoers:
+    name: "{{item.name}}"
+    user: "{{item.name}}"
+    commands: ALL
+    runas: ALL
+    nopassword: yes
