@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- hosts: localhost
+  connection: local
   name: Update and install tools for TLS
   become: true
   pre_tasks:
@@ -12,7 +13,8 @@
       name: ["curl", "gpg", "ca-certificates"]
       state: latest
 
-- hosts: all
+- hosts: localhost
+  connection: local
   name: Set up
   become: true
   vars_files:
@@ -23,11 +25,10 @@
     - import_tasks: tasks/install.yaml
     - import_tasks: tasks/users.yaml
     - import_tasks: tasks/acer.yaml
-      tags: ["never", "acer"]
 
-- hosts: all
+- hosts: localhost
+  connection: local
   name: Set Up environment
-  tags: never, env
   become: yes
   become_user: jan
   tasks:

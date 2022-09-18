@@ -3,4 +3,5 @@ USERS:
   - name: jan
     power: true
     groups: ["docker"]
+    zsh: true
   - name: root

@@ -38,7 +38,6 @@
       filename: docker
 
 - name: VS code
-  tags: never, gui
   block:
   - name: vs code | add key
     apt_key:

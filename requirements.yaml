@@ -1,3 +1,4 @@
 ---
 collections:
-- community.general.ansible_galaxy_install
+- community.general
+- gantsign.oh-my-zsh

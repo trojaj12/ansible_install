@@ -7,7 +7,7 @@
     password: "{{ item.password | default(item.name) | password_hash('sha512') }}"
     append: yes
     groups: "{{ item.groups | default([]) }}"
-    shell: /bin/bash
+    shell: "{{ '/usr/bin/zsh' if item.zsh is defined and item.zsh is true else '/bin/bash' }}"
 
 - name: Add user to sudoers
   loop: "{{USERS}}"
